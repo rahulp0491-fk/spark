@@ -47,15 +47,20 @@ private[spark] class PDirectKafkaInputDStream[K, V] (_ssc: StreamingContext,
 
     // position for new partitions determined by auto.offset.reset if no commit
     currentOffsets = currentOffsets ++ newPartitions.map(tp => tp -> c.position(tp)).toMap
+    logInfo("Total TopicPartitions subscribed : " + currentOffsets.keySet.mkString("[", ",", "]"))
 
     val random = new Random().nextInt(101)
+    logInfo("Random number generated : " + random.toString)
+
     val offsetsToConsider =
       currentOffsets.keySet
         .filter(tp => (random >= topicAllocationBracket(tp.topic()).start() &&
           random <= topicAllocationBracket(tp.topic()).end()))
 
+    logInfo("TopicPartitions selected : " + offsetsToConsider.mkString("[", ",", "]"))
+
     // find latest available offsets
     c.seekToEnd(offsetsToConsider.asJava)
-    return parts.map(tp => tp -> c.position(tp)).toMap
+    parts.map(tp => tp -> c.position(tp)).toMap
   }
 }
