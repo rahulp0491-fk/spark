@@ -159,7 +159,9 @@ private[spark] class DirectKafkaInputDStream[K, V](
    * The concern here is that poll might consume messages despite being paused,
    * which would throw off consumer position.  Fix position if this happens.
    */
-  private def paranoidPoll(c: Consumer[K, V]): Unit = {
+  protected def paranoidPoll(c: Consumer[K, V]): Unit = {
+    // don't actually want to consume any messages, so pause all partitions
+    c.pause(c.assignment())
     val msgs = c.poll(0)
     if (!msgs.isEmpty) {
       // position should be minimum offset per topicpartition

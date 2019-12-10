@@ -194,6 +194,16 @@ object KafkaUtils extends Logging {
         jssc.ssc, locationStrategy, consumerStrategy, perPartitionConfig))
   }
 
+  @Experimental
+  def createPDirectStream[K, V](jssc: JavaStreamingContext,
+                                locationStrategy: LocationStrategy,
+                                consumerStrategy: ConsumerStrategy[K, V],
+                                tpc: Map[String, Int]
+                               ): JavaInputDStream[ConsumerRecord[K, V]] = {
+    val ppc = new DefaultPerPartitionConfig(jssc.ssc.sparkContext.getConf)
+    new JavaInputDStream(new PDirectKafkaInputDStream[K, V](jssc.ssc, locationStrategy, consumerStrategy, ppc, tpc))
+  }
+
   /**
    * Tweak kafka params to prevent issues on executors
    */
