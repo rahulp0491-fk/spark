@@ -13,7 +13,7 @@ private[spark] class PDirectKafkaInputDStream[K, V] (_ssc: StreamingContext,
                                                      tpc: Map[String, Int])
   extends DirectKafkaInputDStream[K, V] (_ssc, locationStrategy, consumerStrategy, ppc) {
 
-  val topicAllocationBracket = {
+  val topicAllocationBracket: Map[String, AllocationBracket] = {
     var tab = scala.collection.mutable.Map[String, AllocationBracket]()
     var cumulative = 0
     for ((k, v) <- tpc) {
