@@ -52,15 +52,15 @@ private[spark] class PDirectKafkaInputDStream[K, V] (_ssc: StreamingContext,
     val random = new Random().nextInt(101)
     logInfo("Random number generated : " + random.toString)
 
-    val offsetsToConsider =
+    val tpsToConsider =
       currentOffsets.keySet
         .filter(tp => (random >= topicAllocationBracket(tp.topic()).start() &&
           random <= topicAllocationBracket(tp.topic()).end()))
 
-    logInfo("TopicPartitions selected : " + offsetsToConsider.mkString("[", ",", "]"))
+    logInfo("TopicPartitions selected : " + tpsToConsider.mkString("[", ",", "]"))
 
     // find latest available offsets
-    c.seekToEnd(offsetsToConsider.asJava)
+    c.seekToEnd(tpsToConsider.asJava)
     parts.map(tp => tp -> c.position(tp)).toMap
   }
 }
