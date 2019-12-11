@@ -226,6 +226,7 @@
     <spark.test.home>${session.executionRootDirectory}</spark.test.home>
 
     <CodeCacheSize>512m</CodeCacheSize>
+    <spark.version>2.3.3</spark.version>
   </properties>
   <repositories>
     <repository>
@@ -295,12 +296,12 @@
       <dependency>
         <groupId>org.apache.spark</groupId>
         <artifactId>spark-tags_${scala.binary.version}</artifactId>
-        <version>${project.version}</version>
+        <version>${spark.version}</version>
       </dependency>
       <dependency>
         <groupId>org.apache.spark</groupId>
         <artifactId>spark-tags_${scala.binary.version}</artifactId>
-        <version>${project.version}</version>
+        <version>${spark.version}</version>
         <type>test-jar</type>
       </dependency>
       <dependency>
