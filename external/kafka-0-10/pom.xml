@@ -26,9 +26,11 @@
   </parent>
 
   <artifactId>spark-streaming-kafka-0-10_2.11</artifactId>
+  <version>2.3.3-FK-SNAPSHOT</version>
   <properties>
     <sbt.project.name>streaming-kafka-0-10</sbt.project.name>
     <kafka.version>0.10.0.1</kafka.version>
+    <spark.version>2.3.3</spark.version>
   </properties>
   <packaging>jar</packaging>
   <name>Spark Integration for Kafka 0.10</name>
@@ -38,13 +40,13 @@
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-streaming_${scala.binary.version}</artifactId>
-      <version>${project.version}</version>
+      <version>${spark.version}</version>
       <scope>provided</scope>
     </dependency>
     <dependency>
       <groupId>org.apache.spark</groupId>
       <artifactId>spark-core_${scala.binary.version}</artifactId>
-      <version>${project.version}</version>
+      <version>${spark.version}</version>
       <type>test-jar</type>
       <scope>test</scope>
     </dependency>
